@@ -14,7 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: docker build . --file Dockerfile --tag iperf_server:$(date +%s) 
+    - run: docker build . --file Dockerfile --tag iperf_server:$(date +%s)
+    - run: docker images 
     - run: docker run --name iperf -p 5201:5201 iperf_server
     - run: apt install iperf3 -y 
     - run: iperf3 -c 127.0.0.1
