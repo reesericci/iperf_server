@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag iperf_server:$(date +%s)
+    - name: Run docker image
+      run: docker run --name iperf -p 5201:5201 iperf_server
+    - name: Test iperf server
+      run: apt install iperf3 -y && iperf3 -c 127.0.0.1
+    - name: Kill docker image
+      run: docker stop iperf -f && docker rm -f iperf
