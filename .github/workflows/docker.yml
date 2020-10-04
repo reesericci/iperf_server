@@ -1,14 +1,11 @@
 name: Docker
 
 on:
+  release:
   push:
     # Publish `main` as Docker `latest` image.
     branches:
       - main
-
-    # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
 
   # Run tests for any PRs.
   pull_request:
@@ -28,6 +25,7 @@ jobs:
     - run: sudo apt-get install iperf3 -y 
     - run: iperf3 -c 127.0.0.1
     - run: docker rm -f iperf
+    - run: echo "${{github.event}}"
 
   push-gh:
     # Ensure test job passes before pushing image.
