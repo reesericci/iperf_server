@@ -7,11 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - run: docker build . --file Dockerfile -t iperf_server
@@ -19,4 +16,4 @@ jobs:
     - run: docker run -d --name iperf -p 5201:5201 iperf_server
     - run: sudo apt-get install iperf3 -y 
     - run: iperf3 -c 127.0.0.1
-    - run: docker stop iperf -f && docker rm -f iperf
+    - run: docker rm -f iperf
