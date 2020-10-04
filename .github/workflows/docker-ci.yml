@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker CI
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - run: docker build . --file Dockerfile --tag iperf_server:$(date +%s)
     - run: docker images 
-    - run: docker run --name iperf -p 5201:5201 iperf_server
+    - run: docker run --name iperf -p 5201:5201 iperf_server:$(date +%s)
     - run: apt install iperf3 -y 
     - run: iperf3 -c 127.0.0.1
     - run: docker stop iperf -f && docker rm -f iperf
