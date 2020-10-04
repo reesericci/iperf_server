@@ -25,15 +25,13 @@ jobs:
     - run: sudo apt-get install iperf3 -y 
     - run: iperf3 -c 127.0.0.1
     - run: docker rm -f iperf
-    - run: echo "${{github.event}}"
 
   push-gh:
     # Ensure test job passes before pushing image.
     needs: test
 
     runs-on: ubuntu-latest
-    if: github.event == 'release'
-
+    if: github.event_name == 'release'
     steps:
       - uses: actions/checkout@v2
 
